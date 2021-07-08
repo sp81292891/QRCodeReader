@@ -1,0 +1,28 @@
+<div class="container">
+
+<div class="scanner">
+  <zxing-scanner  (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+</div>
+  
+
+  <section class="results" *ngIf="qrResultString">
+    <div>
+      <small>Result</small>
+      <strong>{{ qrResultString }}</strong>
+    </div>
+  </section>
+</div>
+<p-dialog header="" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+    [draggable]="false" [resizable]="false">
+    <ng-container  *ngIf="!isResult">
+    <p-progressSpinner></p-progressSpinner><h2>Verifying Please wait</h2>
+    </ng-container>
+    <ng-container   *ngIf="isVerified && isResult">
+        <button *ngIf="isVerified && isResult" pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded p-button-outlined" (click)="displayModal=false"></button>
+        <h2>Verifyed, Thank You</h2>
+      </ng-container>
+      <ng-container  *ngIf="isVerified==false && isResult">
+        <button  pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined"  (click)="displayModal=false"></button>
+        <h2>Unable to find the data.Please Try again.. , Thank You</h2>
+      </ng-container>
+  </p-dialog>
